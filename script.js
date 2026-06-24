@@ -1,0 +1,1 @@
+document.querySelectorAll('.glass').forEach(x=>x.style.transition='1s');
