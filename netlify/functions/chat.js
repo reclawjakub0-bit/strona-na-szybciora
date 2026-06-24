@@ -10,17 +10,28 @@ exports.handler = async (event) => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          contents: [{ parts: [{ text:
-            "Jesteś Szybcior AI. Odpowiadasz po polsku jako asystent firmy tworzącej strony internetowe. Pytanie klienta: " + message
-          }]}]
+          contents: [{
+            parts: [{
+              text: message
+            }]
+          }]
         })
       }
     );
 
     const data = await response.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Brak odpowiedzi.";
-    return { statusCode: 200, body: JSON.stringify({ reply: text }) };
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(data)
+    };
+
   } catch (e) {
-    return { statusCode: 500, body: JSON.stringify({ reply: "Błąd połączenia z AI." }) };
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        error: e.toString()
+      })
+    };
   }
 };
